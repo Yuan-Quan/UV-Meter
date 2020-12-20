@@ -3,5 +3,5 @@
     "configuration": "cpu=atmega328old",
     "programmer": "USBasp",
     "port": "COM4",
-    "sketch": "Test Code\\test\\test.ino"
+    "sketch": "Test Code\\Tlc5940Test\\Tlc5940Test.ino"
 }
