@@ -29,6 +29,22 @@
 #define LED_CLIP_CH1 12
 #define LED_CLIP_CH2 13
 
+///////////STRUCTS////////////
+
+struct Led
+{
+  //currnet color of RGB LED
+  uint8_t current_r;
+  uint8_t current_g;
+  uint8_t current_b;
+
+  //color assigned to LED
+  uint8_t new_r;
+  uint8_t new_g;
+  uint8_t new_b;
+};
+
+
 void setup()
 {
   // Call Tlc.init() to setup the tlc.
@@ -46,3 +62,4 @@ int GetGrayscaleValue(uint8_t value)
 {
   return map(value, 0, 255, BRIGHTNESS_MIN, BRIGHTNESS_MAX);
 }
+
