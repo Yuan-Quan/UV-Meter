@@ -46,6 +46,9 @@
 
 #include "Tlc5940.h"
 
+#define BRIGHTNESS_MIN 50
+#define BRIGHTNESS_MAX 224
+
 void setup()
 {
   /* Call Tlc.init() to setup the tlc.
@@ -61,14 +64,14 @@ void setup()
 void loop()
 {
   int direction = 1;
-  for (int brightness = 128; brightness < 1048; brightness += direction) {
+  for (int brightness = BRIGHTNESS_MIN; brightness <= BRIGHTNESS_MAX; brightness += direction) {
 
-    if (brightness == 128)
+    if (brightness == BRIGHTNESS_MIN)
     {
       direction = 1;
     }
 
-    if (brightness == 1047)
+    if (brightness == BRIGHTNESS_MAX)
     {
       direction = -1;
     }
@@ -82,10 +85,7 @@ void loop()
 
     Tlc.update();
 
-    if (brightness % 2 == 0)
-    {
-      delay(5);
-    }
+    delay(500);
     
   }
 
