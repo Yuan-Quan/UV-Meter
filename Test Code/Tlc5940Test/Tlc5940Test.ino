@@ -61,14 +61,14 @@ void setup()
 void loop()
 {
   int direction = 1;
-  for (int brightness = 0; brightness < 4096; brightness += direction) {
+  for (int brightness = 128; brightness < 1048; brightness += direction) {
 
-    if (brightness == 0)
+    if (brightness == 128)
     {
       direction = 1;
     }
 
-    if (brightness == 4095)
+    if (brightness == 1047)
     {
       direction = -1;
     }
@@ -84,7 +84,7 @@ void loop()
 
     if (brightness % 2 == 0)
     {
-      delay(1);
+      delay(5);
     }
     
   }
