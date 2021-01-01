@@ -1,7 +1,14 @@
 #include "Tlc5940.h"
 
-#define BRIGHTNESS_MIN 0
-#define BRIGHTNESS_MAX 255
+
+///////////CONSTANTS//////////
+
+/*Range of LED brightness, 
+  RGB value form 0-255 will be maped to this, 
+  then parse to TLC
+*/
+#define BRIGHTNESS_MIN 0  //The minimum grascale value globally
+#define BRIGHTNESS_MAX 255  //The maximum grascale value globally
 
 void setup()
 {
