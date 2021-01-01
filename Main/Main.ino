@@ -11,7 +11,8 @@
 #define BRIGHTNESS_MIN 0  //The minimum grascale value globally
 #define BRIGHTNESS_MAX 255  //The maximum grascale value globally
 
-/*Corresponding index for led on panle
+/*LEDs
+  Corresponding index for led on panle
 */
 #define LED_INPUT_SELECTOR 0
 #define LED_14INCH 1
