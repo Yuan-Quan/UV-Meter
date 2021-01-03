@@ -24,7 +24,7 @@ Led::Led(uint8_t index)
     _busy = false;
 }
 
-void Led::newValue(uint8_t r, uint8_t g, uint8_t b)
+void Led::newValue(uint16_t r, uint16_t g, uint16_t b)
 {
     new_r = r;
     new_g = g;
@@ -51,5 +51,6 @@ void Led::update()
     last_g = new_g;
     last_b = new_b;
 }
+
 
 

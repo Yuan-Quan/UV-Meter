@@ -15,7 +15,7 @@
 #define BRIGHTNESS_MAX 255  //The maximum grascale value globally
 
 // Turn on debug statements to the serial output
-#define DEBUG 0
+#define DEBUG 1
 
 #if DEBUG
 #define PRINT(s, x) { Serial.print(F(s)); Serial.print(x); }
@@ -91,10 +91,30 @@ Led *LEDs[] {
 ///////////SETUP & LOOP///////
 void setup()
 {
+  if (DEBUG)
+  {
+    Serial.begin(115200);
+    PRINTS("//////////DEBUG MODE///////");
+  }
+  
+
   // Call Tlc.init() to setup the tlc.
   Tlc.init();
 
   Tlc.clear();
+
+  //set all led to white
+  for (size_t i = 0; i < (sizeof(LEDs)/sizeof(LEDs[0])); i++)
+  {
+    setLedColor(&*LEDs[i], 30, 30, 30);
+  }
+
+  //for gain control, set two channle to master
+  setLedColor(&LedMasterL, 0,100,4);
+  setLedColor(&LedSlaveL, 10,10,10);
+  setLedColor(&LedMasterR, 0,100,4);
+  setLedColor(&LedSlaveR, 10,10,10);
+
 
   isLedColorChaged = true; //initial led
 }
@@ -109,6 +129,7 @@ void loop()
   {
     Tlc.update(); //update gs values of tlc 
     isLedColorChaged = false;
+    PRINTS("tlc update called");
   }
 
   if (DEBUG)
@@ -122,7 +143,7 @@ void loop()
 ///////////Methods/////////////
 
 //get the gs value for tlc, from brightness
-int GetGrayscaleValue(uint8_t value)
+int GetGsValue(uint8_t value)
 {
   return map(value, 0, 255, BRIGHTNESS_MIN, BRIGHTNESS_MAX);
 }
@@ -131,7 +152,14 @@ void updateLeds()
 {
   for (size_t i = 0; i < (sizeof(LEDs)/sizeof(LEDs[0])); i++)
   {
+    PRINTS("///\n ");
     LEDs[i]->update();
+    PRINTX(LEDs[i]->last_r);
   }
   
+}
+
+void setLedColor(Led* led, uint8_t r, uint8_t g, uint8_t b)
+{
+  led->newValue(GetGsValue(r), GetGsValue(g), GetGsValue(b));
 }
