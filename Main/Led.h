@@ -27,6 +27,7 @@ class Led
     //
     Led(uint8_t index);
     void newValue(uint8_t r, uint8_t g, uint8_t b);
+    void update();
 
   private:
     unsigned long _time;

@@ -14,6 +14,11 @@
 #define BRIGHTNESS_MIN 0  //The minimum grascale value globally
 #define BRIGHTNESS_MAX 255  //The maximum grascale value globally
 
+///////////VARIABLES///////////
+
+//Led changed needs update
+bool isLedColorChaged;
+
 ////////////LEDs/////////////
 /*LEDs
   Corresponding index for led on panle
@@ -73,13 +78,21 @@ void setup()
 {
   // Call Tlc.init() to setup the tlc.
   Tlc.init();
+
+  isLedColorChaged = true; //initial led
 }
 
 void loop()
 {
   
-  Tlc.update(); //update gs values of tlc 
-  //TODO: do not update if no changes made to led colors
+  updateLeds();
+
+  //do not update if color is not chaged
+  if (isLedColorChaged)
+  {
+    Tlc.update(); //update gs values of tlc 
+    isLedColorChaged = false;
+  }
 }
 
 ///////////Methods/////////////
@@ -90,3 +103,11 @@ int GetGrayscaleValue(uint8_t value)
   return map(value, 0, 255, BRIGHTNESS_MIN, BRIGHTNESS_MAX);
 }
 
+void updateLeds()
+{
+  for (size_t i = 0; i < (sizeof(LEDs)/sizeof(LEDs[0])); i++)
+  {
+    LEDs[i]->update();
+  }
+  
+}
