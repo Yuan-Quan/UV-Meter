@@ -14,10 +14,25 @@
 #define BRIGHTNESS_MIN 0  //The minimum grascale value globally
 #define BRIGHTNESS_MAX 255  //The maximum grascale value globally
 
+// Turn on debug statements to the serial output
+#define DEBUG 0
+
+#if DEBUG
+#define PRINT(s, x) { Serial.print(F(s)); Serial.print(x); }
+#define PRINTS(x) Serial.print(F(x))
+#define PRINTX(x) Serial.println(x, HEX)
+#else
+#define PRINT(s, x)
+#define PRINTS(x)
+#define PRINTX(x)
+#endif
+
 ///////////VARIABLES///////////
 
 //Led changed needs update
 bool isLedColorChaged;
+
+unsigned long currentMillis = millis();
 
 ////////////LEDs/////////////
 /*LEDs
@@ -79,12 +94,14 @@ void setup()
   // Call Tlc.init() to setup the tlc.
   Tlc.init();
 
+  Tlc.clear();
+
   isLedColorChaged = true; //initial led
 }
 
 void loop()
 {
-  
+  //update all led
   updateLeds();
 
   //do not update if color is not chaged
@@ -93,6 +110,13 @@ void loop()
     Tlc.update(); //update gs values of tlc 
     isLedColorChaged = false;
   }
+
+  if (DEBUG)
+  {
+    //just to slow things down
+    delay(300);
+  }
+  
 }
 
 ///////////Methods/////////////
