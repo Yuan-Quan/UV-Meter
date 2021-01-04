@@ -15,7 +15,7 @@
 #define BRIGHTNESS_MAX 255  //The maximum grascale value globally
 
 // Turn on debug statements to the serial output
-#define DEBUG 1
+#define DEBUG 0
 
 #if DEBUG
 #define PRINT(s, x) { Serial.print(F(s)); Serial.print(x); }
@@ -110,11 +110,20 @@ void setup()
   }
 
   //for gain control, set two channle to master
-  setLedColor(&LedMasterL, 0,100,4);
+  setLedColor(&LedMasterL, 0,100,4); //green
   setLedColor(&LedSlaveL, 10,10,10);
-  setLedColor(&LedMasterR, 0,100,4);
+  setLedColor(&LedMasterR, 0,100,4); //green
   setLedColor(&LedSlaveR, 10,10,10);
+  //link not enabled
+  setLedColor(&LedLink, 40, 20, 2); //orange
 
+  //clip indicator shold be dimmer
+  setLedColor(&LedClipCh1,10,10,10);
+  setLedColor(&LedClipCh2,10,10,10);
+
+  //selector to quater inch
+  setLedColor(&Led14Inch, 20,2,26); //purple
+  setLedColor(&LedXlr, 10, 10, 10); 
 
   isLedColorChaged = true; //initial led
 }
@@ -159,6 +168,7 @@ void updateLeds()
   
 }
 
+//set the color of given led*
 void setLedColor(Led* led, uint8_t r, uint8_t g, uint8_t b)
 {
   led->newValue(GetGsValue(r), GetGsValue(g), GetGsValue(b));

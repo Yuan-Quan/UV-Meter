@@ -26,7 +26,7 @@ class Led
 
     //
     Led(uint8_t index);
-    void newValue(uint16_t r, uint16_t g, uint16_t b);
+    void newValue(uint8_t r, uint8_t g, uint8_t b);
     void update();
 
   private:
