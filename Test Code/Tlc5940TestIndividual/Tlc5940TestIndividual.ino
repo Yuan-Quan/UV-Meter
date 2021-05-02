@@ -46,47 +46,37 @@
 
 #include "Tlc5940.h"
 
-#define BRIGHTNESS_MIN 50
-#define BRIGHTNESS_MAX 224
+#define BRIGHTNESS 1000
 
 void setup()
 {
-  /* Call Tlc.init() to setup the tlc.
-      You can optionally pass an initial PWM value (0 - 4095) for all channels.*/
   Tlc.init();
 }
-
-/* This loop will create a Knight Rider-like effect if you have LEDs plugged
-    into all the TLC outputs.  NUM_TLCS is defined in "tlc_config.h" in the
-    library folder.  After editing tlc_config.h for your setup, delete the
-   Tlc5940.o file to save the changes. */
 
 void loop()
 {
   int direction = 1;
-  for (int brightness = BRIGHTNESS_MIN; brightness <= BRIGHTNESS_MAX; brightness += direction) {
+  for (int channel = 0; channel < NUM_TLCS * 16; channel += direction)
+  {
+    Tlc.clear();
 
-    if (brightness == BRIGHTNESS_MIN)
-    {
+    if (channel == 0) {
       direction = 1;
+    } else {
+      Tlc.set(channel - 1, 0);
     }
-
-    if (brightness == BRIGHTNESS_MAX)
-    {
+    Tlc.set(channel, BRIGHTNESS);
+    if (channel != NUM_TLCS * 16 - 1) {
+      Tlc.set(channel + 1, 0);
+    } else {
       direction = -1;
     }
-    
-    Tlc.clear();
-    
-    for (size_t channel = 0; channel < NUM_TLCS *16; channel++)
-    {
-      Tlc.set(channel, brightness);
-    }
 
+    /* Tlc.update() sends the data to the TLCs.  This is when the LEDs will
+       actually change. */
     Tlc.update();
 
-    delay(500);
-    
+    delay(75);
   }
 
 }
