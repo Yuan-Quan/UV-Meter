@@ -76,7 +76,7 @@ void loop()
        actually change. */
     Tlc.update();
 
-    delay(75);
+    delay(500);
   }
 
 }

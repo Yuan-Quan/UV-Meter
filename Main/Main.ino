@@ -12,10 +12,10 @@
   (0-4095)
 */
 #define BRIGHTNESS_MIN 0  //The minimum grascale value globally
-#define BRIGHTNESS_MAX 1000  //The maximum grascale value globally 0-4095
+#define BRIGHTNESS_MAX 3210  //The maximum grascale value globally 0-4095
 
 // Turn on debug statements to the serial output
-#define DEBUG 0
+#define DEBUG 1
 
 #if DEBUG
 #define PRINT(s, x) { Serial.print(F(s)); Serial.print(x); }
@@ -38,22 +38,22 @@ unsigned long currentMillis = millis();
 /*LEDs
   Corresponding index for led on panle
 */
-#define LED_INPUT_SELECTOR_L_INDEX 16
-#define LED_INPUT_SELECTOR_R_INDEX 15
-#define LED_GAIN_CONTROL_L_INDEX 14
-#define LED_GAIN_CONTROL_R_INDEX 13
-#define LED_CLIP_INDICATO_INDEXR 12
-#define LED_14INCH_INDEX 11
-#define LED_XLR_INDEX 10
-#define LED_GAIN_CH1_INDEX 9
-#define LED_GAIN_CH2_INDEX 8
-#define LED_LINK_INDEX 7
-#define LED_MASTERL_INDEX 6
-#define LED_SLAVEL_INDEX 5
-#define LED_MASTERR_INDEX 4
-#define LED_SLAVER_INDEX 3
-#define LED_CLIP_CH1_INDEX 2
-#define LED_CLIP_CH2_INDEX 1
+#define LED_INPUT_SELECTOR_L_INDEX 15
+#define LED_INPUT_SELECTOR_R_INDEX 14
+#define LED_GAIN_CONTROL_L_INDEX 13
+#define LED_GAIN_CONTROL_R_INDEX 12
+#define LED_CLIP_INDICATO_INDEXR 11
+#define LED_14INCH_INDEX 10
+#define LED_XLR_INDEX 9
+#define LED_GAIN_CH1_INDEX 8
+#define LED_GAIN_CH2_INDEX 7
+#define LED_LINK_INDEX 6
+#define LED_MASTERL_INDEX 5
+#define LED_SLAVEL_INDEX 4
+#define LED_MASTERR_INDEX 3
+#define LED_SLAVER_INDEX 2
+#define LED_CLIP_CH1_INDEX 1
+#define LED_CLIP_CH2_INDEX 0
 
 Led LedInputSelectorL(LED_INPUT_SELECTOR_L_INDEX);
 Led LedInputSelectorR(LED_INPUT_SELECTOR_R_INDEX);
@@ -109,27 +109,28 @@ void setup()
 
   Tlc.clear();
 
+////////////// Set static colors//////
   //set all led to white
   for (size_t i = 0; i < (sizeof(LEDs)/sizeof(LEDs[0])); i++)
   {
-    setLedColor(&*LEDs[i], 255, 255, 255);
+    setLedColor(&*LEDs[i], 130, 150, 255); //white
   }
+  //input selector
+  setLedColor(&Led14Inch, 5, 0, 255); //blue
+  setLedColor(&LedXlr, 5, 5, 5); 
 
-  //for gain control, set two channle to master
-  setLedColor(&LedMasterL, 0,100,4); //green
-  setLedColor(&LedSlaveL, 10,10,10);
-  setLedColor(&LedMasterR, 0,100,4); //green
-  setLedColor(&LedSlaveR, 10,10,10);
-  //link not enabled
-  setLedColor(&LedLink, 40, 20, 2); //orange
-
-  //clip indicator shold be dimmer
-  setLedColor(&LedClipCh1,10,10,10);
-  setLedColor(&LedClipCh2,10,10,10);
-
-  //selector to quater inch
-  setLedColor(&Led14Inch, 20,2,26); //purple
-  setLedColor(&LedXlr, 10, 10, 10); 
+  //gain control
+  setLedColor(&LedGainCh1, 0, 0, 255); //blue
+  setLedColor(&LedGainCh2, 0, 0, 255); //green
+  setLedColor(&LedLink, 255, 69, 0); //orange
+  setLedColor(&LedMasterL, 0, 255, 0); //green
+  setLedColor(&LedMasterR, 10, 10, 10); 
+  setLedColor(&LedSlaveL, 10, 10, 10); 
+  setLedColor(&LedSlaveR, 255, 150, 0); //yellow
+  
+  //clip indicator
+  setLedColor(&LedClipCh1, 0, 10, 0); 
+  setLedColor(&LedClipCh2, 0, 10, 0); 
 
   isLedColorChaged = true; //initial led
 }
@@ -150,7 +151,7 @@ void loop()
   if (DEBUG)
   {
     //just to slow things down
-    delay(300);
+    //delay(300);
   }
   
 }
