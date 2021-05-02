@@ -33,6 +33,16 @@ void Led::newValue(uint8_t r, uint8_t g, uint8_t b)
     //isLedColorChaged = true;
 }
 
+void Led::updateTime(unsigned long time)
+{
+    _time = time;
+}
+
+unsigned long Led::getTime()
+{
+    return _time;
+}
+
 //set gs value for this led
 void Led::update()
 {

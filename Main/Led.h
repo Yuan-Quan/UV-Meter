@@ -17,6 +17,7 @@ class Led
     uint8_t new_g;
     uint8_t new_b;
 
+
     int index; //corresponding led index number, 0-13
 
 //corresponding pin in tlc
@@ -27,6 +28,8 @@ class Led
     //
     Led(uint8_t index);
     void newValue(uint8_t r, uint8_t g, uint8_t b);
+    void updateTime(unsigned long time);
+    unsigned long getTime();
     void update();
 
   private:

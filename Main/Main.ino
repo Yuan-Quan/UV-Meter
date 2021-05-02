@@ -12,10 +12,10 @@
   (0-4095)
 */
 #define BRIGHTNESS_MIN 0  //The minimum grascale value globally
-#define BRIGHTNESS_MAX 3210  //The maximum grascale value globally 0-4095
+#define BRIGHTNESS_MAX 4095  //The maximum grascale value globally 0-4095
 
 // Turn on debug statements to the serial output
-#define DEBUG 1
+#define DEBUG 0
 
 #if DEBUG
 #define PRINT(s, x) { Serial.print(F(s)); Serial.print(x); }
@@ -32,7 +32,7 @@
 //Led changed needs update
 bool isLedColorChaged;
 
-unsigned long currentMillis = millis();
+unsigned long currentMillis = 0;
 
 ////////////LEDs/////////////
 /*LEDs
@@ -113,7 +113,7 @@ void setup()
   //set all led to white
   for (size_t i = 0; i < (sizeof(LEDs)/sizeof(LEDs[0])); i++)
   {
-    setLedColor(&*LEDs[i], 130, 150, 255); //white
+    setLedColor(&*LEDs[i], 100, 150, 200); //white
   }
   //input selector
   setLedColor(&Led14Inch, 5, 0, 255); //blue
@@ -129,8 +129,8 @@ void setup()
   setLedColor(&LedSlaveR, 255, 150, 0); //yellow
   
   //clip indicator
-  setLedColor(&LedClipCh1, 0, 10, 0); 
-  setLedColor(&LedClipCh2, 0, 10, 0); 
+  setLedColor(&LedClipCh1, 10, 10, 10); 
+  setLedColor(&LedClipCh2, 10, 10, 10); 
 
   isLedColorChaged = true; //initial led
 }
@@ -139,6 +139,8 @@ void loop()
 {
   //update all led
   updateLeds();
+
+  blinkLed(&LedSlaveR, 255, 150, 0, 500);
 
   //do not update if color is not chaged
   if (isLedColorChaged)
@@ -151,9 +153,11 @@ void loop()
   if (DEBUG)
   {
     //just to slow things down
-    //delay(300);
+    delay(30);
   }
   
+  //update time
+  currentMillis = millis();
 }
 
 ///////////Methods/////////////
@@ -168,9 +172,7 @@ void updateLeds()
 {
   for (size_t i = 0; i < (sizeof(LEDs)/sizeof(LEDs[0])); i++)
   {
-    PRINTS("///\n ");
     LEDs[i]->update();
-    PRINTX(LEDs[i]->last_r);
   }
   
 }
@@ -181,4 +183,23 @@ void updateLeds()
 void setLedColor(Led* led, uint8_t r, uint8_t g, uint8_t b)
 {
   led->newValue(GetGsValue(r), GetGsValue(g), GetGsValue(b));
+}
+
+void blinkLed(Led* led, uint8_t r, uint8_t g, uint8_t b, long interval)
+{
+  if (currentMillis - led->getTime() >= interval) {
+    // save the last time you blinked the LED
+    led->updateTime(currentMillis);
+
+    // if the LED is off turn it on and vice-versa:
+    if (led->last_r == 0) {
+      led->newValue(GetGsValue(r), GetGsValue(g), GetGsValue(b));
+      PRINTS("high");
+    } else {
+      led->newValue(0, 0, 0);
+      PRINTS("low");
+    }
+
+    isLedColorChaged = true;
+  }
 }
