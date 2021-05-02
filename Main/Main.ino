@@ -40,10 +40,11 @@ unsigned long currentMillis = millis();
 */
 #define LED_INPUT_SELECTOR_L_INDEX 16
 #define LED_INPUT_SELECTOR_R_INDEX 15
-#define LED_14INCH_INDEX 11
-#define LED_XLR_INDEX 10
 #define LED_GAIN_CONTROL_L_INDEX 14
 #define LED_GAIN_CONTROL_R_INDEX 13
+#define LED_CLIP_INDICATO_INDEXR 12
+#define LED_14INCH_INDEX 11
+#define LED_XLR_INDEX 10
 #define LED_GAIN_CH1_INDEX 9
 #define LED_GAIN_CH2_INDEX 8
 #define LED_LINK_INDEX 7
@@ -51,14 +52,16 @@ unsigned long currentMillis = millis();
 #define LED_SLAVEL_INDEX 5
 #define LED_MASTERR_INDEX 4
 #define LED_SLAVER_INDEX 3
-#define LED_CLIP_INDICATO_INDEXR 12
 #define LED_CLIP_CH1_INDEX 2
 #define LED_CLIP_CH2_INDEX 1
 
-Led LedInputSelector(LED_INPUT_SELECTOR_INDEX);
+Led LedInputSelectorL(LED_INPUT_SELECTOR_L_INDEX);
+Led LedInputSelectorR(LED_INPUT_SELECTOR_R_INDEX);
+Led LedGainControlL(LED_GAIN_CONTROL_L_INDEX);
+Led LedGainControlR(LED_GAIN_CONTROL_R_INDEX);
+Led LedClipIndicator(LED_CLIP_INDICATO_INDEXR);
 Led Led14Inch(LED_14INCH_INDEX);
 Led LedXlr(LED_XLR_INDEX);
-Led LedGainControl(LED_GAIN_CONTROL_INDEX);
 Led LedGainCh1(LED_GAIN_CH1_INDEX);
 Led LedGainCh2(LED_GAIN_CH2_INDEX);
 Led LedLink(LED_LINK_INDEX);
@@ -66,7 +69,6 @@ Led LedMasterL(LED_MASTERL_INDEX);
 Led LedMasterR(LED_MASTERR_INDEX);
 Led LedSlaveL(LED_SLAVEL_INDEX);
 Led LedSlaveR(LED_SLAVER_INDEX);
-Led LedClipIndicator(LED_CLIP_INDICATO_INDEXR);
 Led LedClipCh1(LED_CLIP_CH1_INDEX);
 Led LedClipCh2(LED_CLIP_CH2_INDEX);
 
@@ -74,10 +76,13 @@ Led LedClipCh2(LED_CLIP_CH2_INDEX);
 ///////////LED ARRAY///////////
 
 Led *LEDs[] {
-  &LedInputSelector, 
+  &LedInputSelectorL,
+  &LedInputSelectorR, 
+  &LedGainControlL,
+  &LedGainControlR, 
+  &LedClipIndicator, 
   &Led14Inch, 
   &LedXlr, 
-  &LedGainControl, 
   &LedGainCh1, 
   &LedGainCh2, 
   &LedLink, 
@@ -85,7 +90,6 @@ Led *LEDs[] {
   &LedMasterR, 
   &LedSlaveL, 
   &LedSlaveR, 
-  &LedClipIndicator, 
   &LedClipCh1, 
   &LedClipCh2
 };
