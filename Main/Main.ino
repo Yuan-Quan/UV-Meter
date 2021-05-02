@@ -12,7 +12,7 @@
   (0-4095)
 */
 #define BRIGHTNESS_MIN 0  //The minimum grascale value globally
-#define BRIGHTNESS_MAX 255  //The maximum grascale value globally
+#define BRIGHTNESS_MAX 1000  //The maximum grascale value globally 0-4095
 
 // Turn on debug statements to the serial output
 #define DEBUG 0
@@ -112,7 +112,7 @@ void setup()
   //set all led to white
   for (size_t i = 0; i < (sizeof(LEDs)/sizeof(LEDs[0])); i++)
   {
-    setLedColor(&*LEDs[i], 30, 30, 30);
+    setLedColor(&*LEDs[i], 255, 255, 255);
   }
 
   //for gain control, set two channle to master
@@ -175,6 +175,8 @@ void updateLeds()
 }
 
 //set the color of given led*
+//  Led: instance of led
+//  r, g, b: rgb value, 0-255
 void setLedColor(Led* led, uint8_t r, uint8_t g, uint8_t b)
 {
   led->newValue(GetGsValue(r), GetGsValue(g), GetGsValue(b));
