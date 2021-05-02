@@ -1,6 +1,6 @@
 #include "Led.h"
 #include "Tlc5940.h"
-#include <arduino.h>
+#include <Arduino.h>
 #include <SPI.h>
 
 
